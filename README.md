@@ -1,6 +1,6 @@
 # Kysion Framework &bull; [![Discord](https://img.shields.io/discord/696355996657909790.svg?logo=discord&colorB=7289DA&style=flat-square)](https://discord.gg/BnQECNd) [![Kysion Version](https://img.shields.io/badge/version-pre--alpha-blue?style=flat-square)](/#)
 
-> A modular [Typescript](https://www.typescriptlang.org) only discord.js framework with components from klasajs.
+> A modular [Typescript](https://www.typescriptlang.org) only [discord.js](https://discord.js.org) framework with components from [klasajs](https://klasa.js.org).
 
 Reasons you may want to use Kysion:
 
@@ -8,7 +8,7 @@ Reasons you may want to use Kysion:
 - ⛓️ **Klasa**: Kysion makes use of powerful klasajs components while still being a great alternative to klasa itself.
 - 🔧 **Strictly Typed**: Kysion is strictly type to prevent silly little type errors when using it.
 
-[Github](https://github.com/kyflx/kysion-framework) &bull; [NPM](/#)
+[Github](https://github.com/kyflx/kysion) &bull; [NPM](/#)
 
 ## Setup
 
