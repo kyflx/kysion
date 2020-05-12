@@ -1,0 +1,25 @@
+{
+  "name": "kysion",
+  "version": "0.0.1-alpha",
+  "description": "A TypeScript only discord.js framework made with pieces of KlasaJS",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyflx/kysion.git"
+  },
+  "keywords": [
+    "Framework",
+    "Discord",
+    "Kyflx",
+    "Klasa"
+  ],
+  "author": "Kyflx Developments",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kyflx/kysion/issues"
+  },
+  "homepage": "https://github.com/kyflx/kysion#readme"
+}
