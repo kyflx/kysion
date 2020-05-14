@@ -15,12 +15,17 @@ Reasons you may want to use Kysion:
 Here is a basic setup of Kysion:
 
 ```ts
-import { KysionCore } from "kysion"
+import { Kysion, CommandManager, ArgumentManager, EventsManager } from "kysion";
 
-new KysionCore({ directory: __dirname });
+/** Managers will be loaded in the order they were regestered in. */
+new Kysion({ directory: __dirname });
   .use(new CommandManager(/** Directory Name - e.g "cmds" -> /$cwd/build/cmds or options {...} */))
+  .use(new ArgumentManager(/** Same as Above */)) // We recommend using the argument manager if the command manager is present
   .use(new EventsManager(/** Same as above */))
-  .start(); // Loads all
+  .start(); // Loads all managers and logs in.
+/** Load Order: commands -> arguments -> events */
+
+declare module "kysion"
 
 ```
 
@@ -31,20 +36,20 @@ For better support join our [Discord Server](https://discord.gg/BnQECNd).
 Plugins get called in the KysionCore constructor.
 
 ```ts
-import { KysionCore, KYSION_PLUGIN } from "kysion"
+import { Kysion, KYSION_PLUGIN } from "kysion"
 
-KysionCore
-  .use((this: KysionCore) => this.logger.info("I made a kysion plugin!"));
+Kysion
+  .use((this: Kysion) => this.logger.info("I made a kysion plugin!"));
 
 // Or
 
 const myPlugin = {
-  [KYSION_PLUGIN](this: KysionCore) {
+  [KYSION_PLUGIN](this: Kysion) {
     this.logger.info("I made a kysion plugin!");
   }
 }
 
-KysionCore.use(myPlugin);
+Kysion.use(myPlugin);
 
 ```
 
