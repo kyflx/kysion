@@ -27,5 +27,8 @@
     "discord.js": "^12.2.0",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "fs-nextra": "^0.5.1"
   }
 }

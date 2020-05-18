@@ -3,11 +3,10 @@
  * Licensed under the MIT License. See LICENSE file in the project root for full license information.
  */
 
+import { join } from "path";
 import { Kysion } from "../../Kysion";
-import { Constants } from "../../util/Constants";
 import Util from "../../util/Util";
 import { Registry } from "./Registry";
-import { join } from "path";
 
 export interface PieceOptions {
   /**
@@ -53,27 +52,29 @@ export class Piece {
   public file: string[];
 
   /**
+   * @param registry - The store this piece is for.
+   * @param directory - The base directory to the pieces folder.
+   * @param file - The path from the pieces folder to the piece file.
    * @param options - The options for this piece.
    * @since 0.0.0-alpha
    */
-  public constructor(options: PieceOptions) {
-    options = Util.mergeObjects(options, Constants.DEFAULTS.PIECE._);
+  public constructor(
+    registry: Registry<Piece>,
+    directory: string,
+    file: string[],
+    options: PieceOptions
+  ) {
+    const defaults = registry.options.defaults;
+    if (defaults) options = Util.mergeObjects(defaults, options);
 
-    this.name = options.name;
-    this.enabled = options.enabled;
-  }
-
-  _init(registry: Registry<Piece>, directory: string, file: string[]): this {
-    // Registry and Client.
     this.client = registry.client;
     this.registry = registry;
 
-    // File Stuff
+    this.name = options.name ?? file[file.length - 1].slice(0, -3);
+    this.enabled = options.enabled;
     this.directory = directory;
     this.file = file;
     this.fullCategory = file.slice(0, -1);
-
-    return this;
   }
 
   public init(): any {
@@ -99,18 +100,20 @@ export class Piece {
    * Reloads this piece.
    * @since 0.0.0-alpha
    */
-  public async reload(): Promise<this> {
-    // TODO: create this stuff in the registry.
-    return this;
+  public async reload(): Promise<Piece> {
+    const piece = this.registry.load(this.directory, this.file);
+    await piece.init();
+    if (this.client.registries.listenerCount('pieceReloaded')) this.client.registries.emit('pieceReloaded', piece);
+    return piece;
   }
 
   /**
    * Unloads this piece from the registry.
    * @since 0.0.0-alpha
    */
-  public unload(): void {
-    // TODO: create reload stuff in the registry.
-    return;
+  public unload(): boolean {
+    if (this.client.registries.listenerCount('pieceUnloaded')) this.client.registries.emit('pieceUnloaded', this);
+    return this.registry.delete(this);
   }
 
   /**
@@ -151,6 +154,20 @@ export class Piece {
       directory: this.directory,
       type: this.type,
       enabled: this.enabled,
+    };
+  }
+
+  /**
+   * A typescript decorator to help out with cleanliness.
+   * @param options - The piece options to pass.
+   */
+  public static Setup<O extends PieceOptions>(options?: O) {
+    return function <T extends new (...args: any[]) => Piece>(constructor: T) {
+      return class extends constructor {
+        constructor(...args: any[]) {
+          super(...args, options);
+        }
+      };
     };
   }
 }

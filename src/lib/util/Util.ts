@@ -8,6 +8,17 @@ export default class Util {
     return input && input.constructor === Object;
   }
 
+  /**
+   * Verify if the input is a class constructor.
+   * @param input - The function to verify
+   * @since 0.5.0
+   */
+  public static isClass(input: any): input is Function {
+    return typeof input === 'function' &&
+      typeof input.prototype === 'object' &&
+      input.toString().substring(0, 5) === 'class';
+  }
+
   public static mergeObjects<
     T extends Record<any, any>,
     S extends Record<any, any>

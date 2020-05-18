@@ -4,7 +4,6 @@
 
 Reasons you may want to use Kysion:
 
-- 📦 **Modular**: Each part of kysion is completely modular you don't have to use any of the bundled components..
 - ⛓️ **Klasa**: Kysion makes use of powerful klasajs components while still being a great alternative to klasa itself.
 - 🔧 **Strictly Typed**: Kysion is strictly type to prevent silly little type errors when using it.
 
@@ -15,15 +14,14 @@ Reasons you may want to use Kysion:
 Here is a basic setup of Kysion:
 
 ```ts
-import { Kysion, CommandManager, ArgumentManager, EventsManager } from "kysion";
+import { Kysion, MonitorManager, TaskManager } from "kysion";
 
 /** Managers will be loaded in the order they were regestered in. */
-new Kysion({ directory: __dirname });
-  .use(new CommandManager(/** Directory Name - e.g "cmds" -> /$cwd/build/cmds or options {...} */))
-  .use(new ArgumentManager(/** Same as Above */)) // We recommend using the argument manager if the command manager is present
-  .use(new EventsManager(/** Same as above */))
+new Kysion({ directory: __dirname })
+  .use(new MonitorManager())
+  .use(new TaskManager()
   .start(); // Loads all managers and logs in.
-/** Load Order: commands -> arguments -> events */
+/** Load Order: monitors -> tasks */
 
 declare module "kysion"
 

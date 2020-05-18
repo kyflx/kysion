@@ -16,7 +16,8 @@
     "moduleResolution": "node",
     "lib": ["ES2019"],
     "types": ["node"],
-    "removeComments": true
+    "removeComments": true,
+    "experimentalDecorators": true
   },
   "exclude": ["./build/"]
 }
